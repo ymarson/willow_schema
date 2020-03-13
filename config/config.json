@@ -1,0 +1,21 @@
+{
+  "development": {
+    "username": "demo2",
+    "password": "",
+    "database": "demo2",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false,
+    "freezeTableName": true,
+    "timestamps": false,
+    "underscored": true,
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}

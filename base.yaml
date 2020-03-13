@@ -1,0 +1,12 @@
+---
+Relations:
+
+  - Customer:
+      columns: [id: Int, first_name: String, last_name: String, tier_id: Int, created_date: Date]
+      queries: [all-all]
+  - Message:
+      columns: [id: Int, customer_id: Int, body: String, inout: Int, message_type_id: Int, created_date: Date]
+      queries: [all-all]
+                   
+Associations:
+  - Customer: [ hasMany: Message ]
