@@ -15,6 +15,8 @@ var associations = config.Associations;
 var associationsBuffer = "";
 
 var _ = require('lodash');
+var execSync = require('child_process').execSync;
+var yargs = require('yargs');
 
 for (var x = 0; x < relations.length; x++) {
 
@@ -269,131 +271,160 @@ mutations_buffer = mutations_buffer.replace(/(?<=\/\/start mutation\n\n).*(?=\n\
 
 fs.writeFileSync('schemas/mutations.js', mutations_buffer);
 
+//🥶TODO: check if argument has been passed if user wants to migrate
+
 // //migrations
 // //🥶TODO: create a baseOld file if it doesn't exist. TEST this
-var oldConfig = YAML.parse(fs.readFileSync('base_old.yaml', 'utf8'));
-if (!oldConfig) {
-  fs.writeFileSync('base_old.yaml', '');
-}
-
-var base_rels = config.Relations;
-var base_old_rels = oldConfig.Relations;
-
-var execSync = require('child_process').execSync;
-
-var relations_old = {};
-for (var x = 0; x < base_old_rels.length; x++) {
-    var tmp_cols = {};
-    var tempObj = Object.values(base_old_rels[x])[0];
-    var relationName = Object.keys(base_old_rels[x])[0];
-    var tempColArr = Object.values(tempObj)[0];
-    console.log(tempColArr);
-    for (var y = 0; y < tempColArr.length; y++) {
-        var temp = tempColArr[y].split(':');
-        var name = temp[0];
-        var type = temp[1];
-        type = type.slice(1);
-
-        tmp_cols[ name ] = type; 
-    }
-    relations_old[ relationName ] = tmp_cols;
-    
-}
- 
-console.log(relations_old);
-
-
-for (var i = 0; i < base_rels.length; i++) {
-    var tempObj = Object.values(base_rels[i])[0];
-    var relationName = Object.keys(base_rels[i])[0];
-    var cols = Object.values(tempObj)[0];
-    
-    if (relations_old[ relationName ]) {
-        //console.log('table exists');
-        var tmp_old_cols = relations_old[ relationName ];
-        for (var y = 0; y < cols.length; y++) {
-            var temp = cols[y].split(':');
-            var col_name = temp[0];
-            var col_type = temp[1];
-            col_type = col_type.slice(1);
-            if (tmp_old_cols[ col_name ]) {
-                //console.log('column exists');
-
-                if ( tmp_old_cols[ col_name ] != col_type ) {
-                    console.log('different type');
-
-                    var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn(";
-                    migContent += "\n    '" + relationName + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
-                    migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn('";
-                    migContent += relationName + "', '" + col_name + "')\n  }\n};"
-
-                    execSync('npx sequelize-cli migration:generate --name ' + col_type);
-                    var fileName = execSync('ls -rt migrations/*'+ col_type + '.js | head -1');
-                    fs.writeFileSync(fileName, migContent);
-                }
-
-                delete tmp_old_cols[col_name];
-            } else {
-                console.log('column ' + col_name + ' doesnt exist');
-
-                var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.addColumn(";
-                migContent += "\n    '" + relationName + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
-                migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn('";
-                migContent += relationName + "', '" + col_name + "')\n  }\n};"
-
-                execSync('npx sequelize-cli migration:generate --name ' + col_name);
-                var fileName = execSync('ls -rt migrations/*'+ col_name + '.js | head -1');
-                fs.writeFileSync(fileName, migContent);
-            }
+const argv = yargs
+    .command('willow-generate', 'Tells us to generate the schema', {
+        migrate: {
+            description: 'gives us approval to migrate',
+            // alias: 'y',
+            type: 'boolean',
         }
-        //DELETED COLUMNS:
-        console.log(tmp_old_cols);
-        if (!_.isEmpty(tmp_old_cols)) {
-          console.log('this column has been deleted');
-          var del_name = Object.keys(tmp_old_cols)[0];
-          var del_type = Object.values(tmp_old_cols)[0];
+    })
+    .help()
+    .alias('help', 'h')
+    .argv;
 
-          var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn(";
-          migContent += "\n     '" + relationName + "',\n      '" + del_name + "'\n   );\n },\n\n down: function(queryInterface, Sequelize) {\n  return queryInterface.addColumn(";
-          migContent += "\n    '" + relationName + "',\n     '" + del_name + "',\n    {\n     type: Sequelize." +  del_type.toUpperCase();
-          migContent += ",\n     allowNull: true\n    }\n  )\n };"
-          console.log(migContent);
+if (argv['migrate']) {
+  console.log('creating migrations');
 
-          execSync('npx sequelize-cli migration:generate --name deleted' + del_name);
-          var fileName = execSync('ls -rt migrations/*deleted'+ del_name + '.js | head -1');
-          fs.writeFileSync(fileName, migContent);
-        }
-    } else {
-        console.log('table ' + relationName + '  doesnt exist');
+  var oldConfig = YAML.parse(fs.readFileSync('base_old.yaml', 'utf8'));
+  if (!oldConfig) {
+    fs.writeFileSync('base_old.yaml', '');
+  }
 
-        var migContent = '';
-        migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.createTable('";
-        migContent += camel_case(relationName) + "', {"
-        
-        for (var q = 0; q < cols.length; q++) {
-          var temp = cols[q].split(':');
+  var base_rels = config.Relations;
+  var base_old_rels = oldConfig.Relations;
+  console.log(base_old_rels);
+  console.log(base_rels);
+
+
+  var relations_old = {};
+  for (var x = 0; x < base_old_rels.length; x++) {
+      var tmp_cols = {};
+      var tempObj = Object.values(base_old_rels[x])[0];
+      var relationName = Object.keys(base_old_rels[x])[0];
+      var tempColArr = Object.values(tempObj)[0];
+      console.log(tempColArr);
+      for (var y = 0; y < tempColArr.length; y++) {
+          var temp = tempColArr[y].split(':');
           var name = temp[0];
           var type = temp[1];
           type = type.slice(1);
-          migContent += "\n       " + name + " {\n        type: Sequelize." + type.toUpperCase() + ",";
-          if (name.includes('id')) {
-            migContent += "\n        autoIncrement: true,\n        primaryKey: true,";
-          }
-          migContent += "\n        allowNull: false\n      }";
-          if (q < m - 1) {
-            migContent += ","
-          }
-        }
 
-        migContent += "\n   });\n  },\n\n  down: (queryInterface, Sequelize) => {\n    return queryInterface.dropTable('";
-        migContent += camel_case(relationName) + "');\n  }\n};"
+          tmp_cols[ name ] = type; 
+      }
+      relations_old[ relationName ] = tmp_cols;
+      
+  }
+  
+  console.log(relations_old);
 
-        execSync('npx sequelize-cli migration:generate --name ' + relationName);
-        var fileName = execSync('ls -rt migrations/*'+ relationName + '.js | head -1');
-        fs.writeFileSync(fileName, migContent);
-    }
-    //check here for Deleted table //console.log(tmp_old_cols);
+
+  for (var i = 0; i < base_rels.length; i++) {
+      var tempObj = Object.values(base_rels[i])[0];
+      var relationName = Object.keys(base_rels[i])[0];
+      var cols = Object.values(tempObj)[0];
+      
+      if (relations_old[ relationName ]) {
+          //console.log('table exists');
+          var tmp_old_cols = relations_old[ relationName ];
+          for (var y = 0; y < cols.length; y++) {
+              var temp = cols[y].split(':');
+              var col_name = temp[0];
+              var col_type = temp[1];
+              col_type = col_type.slice(1);
+              if (tmp_old_cols[ col_name ]) {
+                  //console.log('column exists');
+
+                  if ( tmp_old_cols[ col_name ] != col_type ) {
+                      console.log('different type');
+
+                      var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn(";
+                      migContent += "\n    '" + relationName + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
+                      migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn('";
+                      migContent += relationName + "', '" + col_name + "')\n  }\n};"
+
+                      execSync('npx sequelize-cli migration:generate --name ' + col_name);
+                      var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
+                      fs.writeFileSync(fileName.toString().trim(), migContent);
+                  }
+
+                  delete tmp_old_cols[col_name];
+              } else {
+                  console.log('column ' + col_name + ' doesnt exist');
+
+                  var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.addColumn(";
+                  migContent += "\n    '" + relationName + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
+                  migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn('";
+                  migContent += relationName + "', '" + col_name + "')\n  }\n};"
+
+                  execSync('npx sequelize-cli migration:generate --name ' + col_name);
+                  var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
+                  fs.writeFileSync(fileName.toString().trim(), migContent);
+              }
+          }
+          //DELETED COLUMNS:
+          console.log(tmp_old_cols);
+          if (!_.isEmpty(tmp_old_cols)) {
+            console.log('this column has been deleted');
+            var del_name = Object.keys(tmp_old_cols)[0];
+            var del_type = Object.values(tmp_old_cols)[0];
+
+            var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn(";
+            migContent += "\n     '" + relationName + "',\n      '" + del_name + "'\n   );\n },\n\n down: function(queryInterface, Sequelize) {\n  return queryInterface.addColumn(";
+            migContent += "\n    '" + relationName + "',\n     '" + del_name + "',\n    {\n     type: Sequelize." +  del_type.toUpperCase();
+            migContent += ",\n     allowNull: true\n    }\n  )\n };"
+            console.log(migContent);
+
+            execSync('npx sequelize-cli migration:generate --name ' + col_name);
+            var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
+            fs.writeFileSync(fileName.toString().trim(), migContent);
+          }
+      } else {
+          console.log('table ' + relationName + '  doesnt exist');
+
+          var migContent = '';
+          migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.createTable('";
+          migContent += camel_case(relationName) + "', {"
+          
+          for (var q = 0; q < cols.length; q++) {
+            var temp = cols[q].split(':');
+            var name = temp[0];
+            var type = temp[1];
+            type = type.slice(1);
+            migContent += "\n       " + name + " {\n        type: Sequelize." + type.toUpperCase() + ",";
+            if (name.includes('id')) {
+              migContent += "\n        autoIncrement: true,\n        primaryKey: true,";
+            }
+            migContent += "\n        allowNull: false\n      }";
+            if (q < cols.length - 1) {
+              migContent += ","
+            }
+          }
+
+          migContent += "\n   });\n  },\n\n  down: (queryInterface, Sequelize) => {\n    return queryInterface.dropTable('";
+          migContent += camel_case(relationName) + "');\n  }\n};"
+
+          console.log(migContent)
+
+          execSync('npx sequelize-cli migration:generate --name ' + camel_case(relationName));
+          var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
+          fs.writeFileSync(fileName.toString().trim(), migContent);
+      }
+      //check here for Deleted table //console.log(tmp_old_cols);
+  }
+
 }
+
+console.log(argv);
+
+//execSync('cp base.yaml base_old.yaml') //copy base.yaml to base_old.yaml
+
+//new table being added doesnt work 
+//write the migration file once write at the end here, conditionally sort out file name
 
 //add index
 
