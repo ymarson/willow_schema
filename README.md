@@ -21,14 +21,15 @@ Relations:
       columns: [id: Int, customer_id: Int, product_id: Int, body: String, created_date: Date]
       queries: [all-all] 
 ```
+3. Set up Postgres 
 
-3. Generate Willow to apply these changes
+4. Generate Willow to apply these changes
 
 ```bash
 npm run willow-generate
 ```
 
-4. Run Willow to start your backend 
+5. Run Willow to start your backend 
 
 ```bash
 npm run willow-start
