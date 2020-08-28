@@ -1,9 +1,8 @@
 const { GraphQLString, GraphQLObjectType, GraphQLInt, GraphQLID, GraphQLList } = require("graphql");
 //start imports
 
-const { Approval, Distributor, Message, Order, Organisation, Payment, Policy, PriceHistory, Reputation, User, UserT, } = require("../db");
-const { ApprovalType, DistributorType, MessageType, OrderType, OrganisationType, PaymentType, PolicyType, PriceHistoryType, ReputationType, UserType, UserTType, } = require("./types");
-
+const { Customer, Message, Toy, Movie } = require('../db');
+const { CustomerType, MessageType, ToyType, MovieType } = require('./types');
 //end imports
 
 const RootQuery = new GraphQLObjectType({
@@ -13,84 +12,55 @@ const RootQuery = new GraphQLObjectType({
 
 //start queries
 
-    users: {
-      type: new GraphQLList(UserType),
-      args: { },
-      resolve(parentValue, args) {
-        return User.findAll();
-     }
-    },
-    organisations: {
-      type: new GraphQLList(OrganisationType),
-      args: { },
-      resolve(parentValue, args) {
-        return Organisation.findAll();
-     }
-    },
-    reputations: {
-      type: new GraphQLList(ReputationType),
-      args: { },
-      resolve(parentValue, args) {
-        return Reputation.findAll();
-     }
-    },
-    policys: {
-      type: new GraphQLList(PolicyType),
-      args: { },
-      resolve(parentValue, args) {
-        return Policy.findAll();
-     }
-    },
-    approvals: {
-      type: new GraphQLList(ApprovalType),
-      args: { },
-      resolve(parentValue, args) {
-        return Approval.findAll();
-     }
-    },
-    distributors: {
-      type: new GraphQLList(DistributorType),
-      args: { },
-      resolve(parentValue, args) {
-        return Distributor.findAll();
-     }
-    },
-    user_ts: {
-      type: new GraphQLList(UserTType),
-      args: { },
-      resolve(parentValue, args) {
-        return UserT.findAll();
-     }
-    },
-    orders: {
-      type: new GraphQLList(OrderType),
-      args: { },
-      resolve(parentValue, args) {
-        return Order.findAll();
-     }
-    },
-    payments: {
-      type: new GraphQLList(PaymentType),
-      args: { },
-      resolve(parentValue, args) {
-        return Payment.findAll();
-     }
-    },
-    price_historys: {
-      type: new GraphQLList(PriceHistoryType),
-      args: { },
-      resolve(parentValue, args) {
-        return PriceHistory.findAll();
-     }
-    },
-    messages: {
-      type: new GraphQLList(MessageType),
-      args: { },
-      resolve(parentValue, args) {
-        return Message.findAll();
-     }
-    },
-
+customers: {
+  type: new GraphQLList(CustomerType),
+  args: { },
+  resolve(parentValue, args) {
+      return Customer.findAll();
+  }
+},
+messages: {
+  type: new GraphQLList(MessageType),
+  args: { },
+  resolve(parentValue, args) {
+      return Message.findAll();
+  }
+},
+message: {
+  type: MessageType,
+  args: { id: { type: GraphQLID } },
+  resolve(parentValue, args) {
+    return Message.findByPk(args['id']);
+  }
+},
+toys: {
+  type: new GraphQLList(ToyType),
+  args: { },
+  resolve(parentValue, args) {
+      return Toy.findAll();
+  }
+},
+toys_By_product_version_id: {
+  type: new GraphQLList(ToyType),
+  args: { product_version_id: { type: GraphQLID } },
+  resolve(parentValue, args) {
+    return Toy.findAll( { where: args} );
+  }
+},
+movies: {
+  type: new GraphQLList(MovieType),
+  args: { },
+  resolve(parentValue, args) {
+      return Movie.findAll();
+  }
+},
+movies_By_product_version_id: {
+  type: new GraphQLList(MovieType),
+  args: { product_version_id: { type: GraphQLID } },
+  resolve(parentValue, args) {
+    return Movie.findAll( { where: args} );
+  }
+}
 //end queries
   },
 });
