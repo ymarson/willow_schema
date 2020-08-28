@@ -1,6 +1,7 @@
 # this kustomization file is to publish the web only assets
 resources:
-  - posgres.yaml
+  - posgres/posgres.yaml
+  - willow.yaml
 configMapGenerator:
   - name: postgres-config
     literals:
@@ -9,4 +10,4 @@ configMapGenerator:
       - POSTGRES_PASSWORD=admin123
   - name: postgreinit
     files:
-      - initdb.sql
+      - posgres/initdb.sql

@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta3
+kind: Config
+metadata:
+  name: willow_schema
+build:
+  artifacts:
+    - image: willow/schema
+      context: .
+      docker:
+        dockerfile: ./Dockerfile
+deploy:
+  kustomize:
+    paths:
+      - kustomise
