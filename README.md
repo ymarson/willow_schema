@@ -23,10 +23,10 @@ Relations:
 ```
 3. Set up Postgres 
 
-4. Generate Willow to apply these changes
+4. Generate Willow to apply these changes, use migrate flag to run with migrations
 
 ```bash
-npm run willow-generate
+npm run willow-generate --migrate
 ```
 
 5. Run Willow to start your backend 
