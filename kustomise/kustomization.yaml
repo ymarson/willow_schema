@@ -1,0 +1,13 @@
+# this kustomization file is to publish the web only assets
+resources:
+  - posgres/posgres.yaml
+  - willow.yaml
+configMapGenerator:
+  - name: postgres-config
+    literals:
+      - POSTGRES_DB=postgresdb
+      - POSTGRES_USER=postgresadmin
+      - POSTGRES_PASSWORD=admin123
+  - name: postgreinit
+    files:
+      - posgres/initdb.sql
