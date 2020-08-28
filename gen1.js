@@ -164,7 +164,7 @@ for (var x = 0; x < relations.length; x++) {
 // //console.log(tBuffer);
 // //console.log(tExportsBuffer);
 
-types_buffer = types_buffer.replace(/(?<=\/\/start relations\n\n).*(?=\n\/\/end relations)/sg, tBuffer);
+types_buffer = types_buffer.replace(/(?<=\/\/start types\n\n).*(?=\n\/\/end types)/sg, tBuffer);
 
 types_buffer = types_buffer.replace(/(?<=\/\/start exports\n\n).*(?=\n\/\/end exports)/sg, tExportsBuffer);
 
