@@ -1,3 +1,14 @@
+// Hello.
+//
+// This is JSHint, a tool that helps to detect errors and potential
+// problems in your JavaScript code.
+//
+// To start, simply enter some JavaScript anywhere on this page. Your
+// report will appear on the right side.
+//
+// Additionally, you can toggle specific options in the Configure
+// menu.
+
 var fs = require('fs');
 var YAML = require('yamljs');
 
@@ -38,7 +49,7 @@ for (var x = 0; x < relations.length; x++) {
 
    for (var i = 0; i < currentRelation[ relationName ].columns.length; i++) {
     var original = currentRelation[ relationName ].columns[i].split(" ");
-    original[0] = original[0].substring(0, original[0].length - 1)
+    original[0] = original[0].substring(0, original[0].length - 1);
   
     name = original[0];
     type = original[1];
@@ -47,11 +58,11 @@ for (var x = 0; x < relations.length; x++) {
     if ( name == 'id') {
       has_id = true;
       column = name + ": {\n\ttype: Sequelize." + type_map[type] + ", \n\tautoIncrement: true" + ", \n\tprimaryKey: true, \n\tallowNull: false\n}, \n";
-      cols += column
+      cols += column;
       
     } else if (type === "StringN") {
       column = name + ": {\n\ttype: Sequelize.";
-      cols += column
+      cols += column;
     } else {
       //get rid of last comma:
       if (i === currentRelation[ relationName ].columns.length - 1) {
@@ -60,12 +71,12 @@ for (var x = 0; x < relations.length; x++) {
          column = name + ": {\n\ttype: Sequelize." + type_map[type] + ", \n\tallowNull: false\n}, \n"; 
       }
       
-      cols += column
+      cols += column;
     }
 
   }
 
-  buffer += cols + " \n}); \n"
+  buffer += cols + " \n}); \n";
   if (!has_id) {
     buffer += relationName + ".removeAttribute('id');\n";
   }
@@ -78,17 +89,17 @@ for (var x = 0; x < relations.length; x++) {
 for (var x = 0; x < associations.length; x++) {  
     var currentAssociation = associations[x];
     var associationName = Object.keys(currentAssociation)[0];
-    var temp = currentAssociation[ associationName ][0]
-    var aggType = temp.split(": ")[0]
-    var attraction = temp.split(": ")[1]
+    var temp = currentAssociation[ associationName ][0];
+    var aggType = temp.split(": ")[0];
+    var attraction = temp.split(": ")[1];
 
     if (aggType === 'hasMany') {
-      associationsBuffer += associationName + "." + aggType + "(" + attraction + ", {\n\tas: '" + make_plural(camel_case(attraction)) + "',\n\tforeignKey: '" + camel_case(associationName) + "_id',\n\tsourceKey: 'id'\n});\n"
+      associationsBuffer += associationName + "." + aggType + "(" + attraction + ", {\n\tas: '" + make_plural(camel_case(attraction)) + "',\n\tforeignKey: '" + camel_case(associationName) + "_id',\n\tsourceKey: 'id'\n});\n";
       //console.log(aggType)
     } else if (aggType === 'belongsTo') {
-        associationsBuffer += associationName + "." + aggType + "(" + attraction + ", {\n\tas: '" + camel_case(attraction) + "',\n\tforeignKey: '" + camel_case(associationName) + "_id',\n\tsourceKey: 'id'\n});\n"
+        associationsBuffer += associationName + "." + aggType + "(" + attraction + ", {\n\tas: '" + camel_case(attraction) + "',\n\tforeignKey: '" + camel_case(associationName) + "_id',\n\tsourceKey: 'id'\n});\n";
     } else {
-      associationsBuffer += associationName + "." + aggType + "(" + attraction + ", {\n\tas: '" + make_plural(camel_case(attraction)) + "',\n\through: '" + camel_case(associationName) + "_" + camel_case(attraction) + "',\n\tforeignKey: '" + camel_case(associationName) + "_id',\n\tsourceKey: 'id'\n});\n"
+      associationsBuffer += associationName + "." + aggType + "(" + attraction + ", {\n\tas: '" + make_plural(camel_case(attraction)) + "',\n\through: '" + camel_case(associationName) + "_" + camel_case(attraction) + "',\n\tforeignKey: '" + camel_case(associationName) + "_id',\n\tsourceKey: 'id'\n});\n";
     }
     
     
@@ -120,17 +131,19 @@ for (var x = 0; x < relations.length; x++) {
 
   for (var i = 0; i < currentRelation[ relationName ].columns.length; i++) {
     var original = currentRelation[ relationName ].columns[i].split(" ");
-    original[0] = original[0].substring(0, original[0].length - 1)
+    original[0] = original[0].substring(0, original[0].length - 1);
     name = original[0];
     type = original[1];
 
-    tBuffer += "     " + name + ": {\n      type: " + graphQL_equivalent(type) + ",\n    " + resolve_block_types(name, type) + "\n    }";
+    tBuffer += "     " + name + ": {\n      type: " + graphQL_equivalent(type) + ",\n    " + resolve_block_types(name, type);
 
-    if (i === currentRelation[ relationName ].columns.length - 1) {
-      tBuffer += "\n"
-    } else {
-      tBuffer += ",\n"
-    }
+    tBuffer += "\n    },\n";
+
+    // if (i === currentRelation[ relationName ].columns.length - 1) {
+    //   tBuffer += "\n    }\n";
+    // } else {
+    //   tBuffer += "\n    },\n";
+    // }
 
   }
 
@@ -139,7 +152,7 @@ for (var x = 0; x < relations.length; x++) {
 
   for (var l = 0; l < associations.length; l++) {
     if (get_matching_association(relationName, associations[l])) {
-      matchingAssociation = associations[l]
+      matchingAssociation = associations[l];
       break;
     }
   }
@@ -147,18 +160,21 @@ for (var x = 0; x < relations.length; x++) {
   if (matchingAssociation) {
     let matchingRelationName = matchingAssociation[ relationName ].toString().split(': ')[1];
     if (matchingAssociation[ relationName ].toString().includes('hasMany')) {
-      tBuffer += "    " + make_plural(camel_case(matchingRelationName)) + ": {\n      type: GraphQLList(" + append_type(matchingRelationName) + "),\n"
-      tBuffer += "      resolve (c) {\n        return c.get" + make_plural(matchingRelationName) + "();\n      }\n    }"
+      tBuffer += "    " + make_plural(camel_case(matchingRelationName)) + ": {\n      type: GraphQLList(" + append_type(matchingRelationName) + "),\n";
+      tBuffer += "      resolve (c) {\n        return c.get" + make_plural(matchingRelationName) + "();\n      }\n    }";
     } else if (matchingAssociation[ relationName ].toString().includes('belongsTo')) {
-      tBuffer += "    " + camel_case(matchingRelationName) + ": {\n      type: GraphQLList(" + append_type(matchingRelationName) + "),\n"
-      tBuffer += "      resolve (c) {\n        return c.get" + matchingRelationName + "();\n      }\n    }"    }
+      tBuffer += "    " + camel_case(matchingRelationName) + ": {\n      type: GraphQLList(" + append_type(matchingRelationName) + "),\n";
+      tBuffer += "      resolve (c) {\n        return c.get" + matchingRelationName + "();\n      }\n    }";    
   }
+ } else {
+  //tBuffer += "\n" DELETE the last comma
+  tBuffer = tBuffer.replace(/,\s*$/, "");
+ }
 
+ tBuffer += "\n  }; \n}\n});\n";
 
+ tExportsBuffer += "exports." + relationName + "Type  = " + relationName + "Type; \n";
 
-  tBuffer += "\n});\n"
-
-  tExportsBuffer += "exports." + relationName + "Type  = " + relationName + "Type; \n";
 }
 
 // //console.log(tBuffer);
@@ -172,7 +188,7 @@ fs.writeFileSync('schemas/types.js', types_buffer);
 
 // //writing queries.js
 var queries_buffer = fs.readFileSync('schemas/queries.js', 'utf8');
-var qBuffer = ""
+var qBuffer = "";
 var qImportsBuffer = '';
 var firstImports = '';
 var secondImports = '';
@@ -184,17 +200,17 @@ for (var x = 0; x < relations.length; x++) {
   firstImports += " " + relationName;
   secondImports += " " + append_type(relationName);
   
-  qBuffer += make_plural(camel_case(relationName)) + ": {\n  type: new GraphQLList(" + append_type(relationName) + "),\n  args: { },\n"
-  qBuffer += resolve_block_queries(relationName) + "\n}"
+  qBuffer += make_plural(camel_case(relationName)) + ": {\n  type: new GraphQLList(" + append_type(relationName) + "),\n  args: { },\n";
+  qBuffer += resolve_block_queries(relationName) + "\n}";
 
   if (currentRelation[ relationName ].queries.includes('by-pk')) {
-    qBuffer += ",\n" + camel_case(relationName) + ": {\n  type: " + append_type(relationName) + ",\n  args: { id: { type: GraphQLID } },\n  "
-    qBuffer += "resolve(parentValue, args) {\n    return " + relationName + ".findByPk(args['id']);\n  }\n}"
+    qBuffer += ",\n" + camel_case(relationName) + ": {\n  type: " + append_type(relationName) + ",\n  args: { id: { type: GraphQLID } },\n  ";
+    qBuffer += "resolve(parentValue, args) {\n    return " + relationName + ".findByPk(args['id']);\n  }\n}";
   }
 
   if (currentRelation[ relationName ].queries.includes('all-product_version_id')) {
-    qBuffer += ",\n" + make_plural(camel_case(relationName)) + "_By_product_version_id: {\n  type: new GraphQLList(" + append_type(relationName) + "),\n"
-    qBuffer += "  args: { product_version_id: { type: GraphQLID } },\n  resolve(parentValue, args) {\n    return " + relationName + ".findAll( { where: args} );\n  }\n}" 
+    qBuffer += ",\n" + make_plural(camel_case(relationName)) + "_By_product_version_id: {\n  type: new GraphQLList(" + append_type(relationName) + "),\n";
+    qBuffer += "  args: { product_version_id: { type: GraphQLID } },\n  resolve(parentValue, args) {\n    return " + relationName + ".findAll( { where: args} );\n  }\n}"; 
   }
 
   if (currentRelation[ relationName ].queries.includes('byone-customer_id')) {
@@ -206,15 +222,15 @@ for (var x = 0; x < relations.length; x++) {
   }
 
   if (x !== relations.length - 1) {
-      firstImports += ","
-      secondImports += ","
-      qBuffer += ",\n"
+      firstImports += ",";
+      secondImports += ",";
+      qBuffer += ",\n";
   }
 
 }
 
-qImportsBuffer = "const {" + firstImports + " } = require('../db');" 
-qImportsBuffer += "\nconst {" + secondImports + " } = require('./types');"
+qImportsBuffer = "const {" + firstImports + " } = require('../db');" ;
+qImportsBuffer += "\nconst {" + secondImports + " } = require('./types');";
 
 // //console.log(qBuffer)
 // //console.log(qImportsBuffer);
@@ -228,40 +244,40 @@ var mutations_buffer = fs.readFileSync('schemas/mutations.js', 'utf8');
 var mBuffer = "";
 var mImportsBuffer = '';
 
-mBuffer = "const RootMutation = new GraphQLObjectType({\n  name: 'RootMutationType',\n  type: 'Mutation',\n  fields: {\n"
+mBuffer = "const RootMutation = new GraphQLObjectType({\n  name: 'RootMutationType',\n  type: 'Mutation',\n  fields: {\n";
 
 for (var x = 0; x < relations.length; x++) {
   var currentRelation = relations[x];
   var relationName = Object.keys(currentRelation)[0];
 
-  mBuffer += "    add" + relationName + ": {\n      type: " + append_type(relationName) + ",\n       args: {\n        name: { type: GraphQLString }\n       },\n"
-  mBuffer += "       resolve(parentValue, args) {\n" 
+  mBuffer += "    add" + relationName + ": {\n      type: " + append_type(relationName) + ",\n       args: {\n        name: { type: GraphQLString }\n       },\n";
+  mBuffer += "       resolve(parentValue, args) {\n"; 
 
   var cols = [];
   for (var i = 0; i < currentRelation[ relationName ].columns.length; i++) {
     var original = currentRelation[ relationName ].columns[i].split(" ");
-    original[0] = original[0].substring(0, original[0].length - 1)
+    original[0] = original[0].substring(0, original[0].length - 1);
     name = original[0];
-    cols.push(name)    
+    cols.push(name);    
   }
 
-  mBuffer += "        " + resolve_block_mutations(relationName, cols)
-  mBuffer += "\n       }"
+  mBuffer += "        " + resolve_block_mutations(relationName, cols);
+  mBuffer += "\n       }";
 
   if (x !== relations.length - 1) {
-    mBuffer += "\n   },\n"
+    mBuffer += "\n   },\n";
   } else {
-    mBuffer += "\n    }\n"
+    mBuffer += "\n    }\n";
   }
 
   
 
 }
 
-mBuffer += "\n  }\n});\n\n"
-mBuffer += "\n\nexports.mutation = RootMutation;"
+mBuffer += "\n  }\n});\n\n";
+mBuffer += "\n\nexports.mutation = RootMutation;";
 
-mImportsBuffer = "const graphql = require('graphql');\nconst Sequelize = require('sequelize')\nconst { Customer } = require('../db');\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;\nconst { CustomerType } = require('./types');"
+mImportsBuffer = "const graphql = require('graphql');\nconst Sequelize = require('sequelize')\nconst { Customer } = require('../db');\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;\nconst { CustomerType } = require('./types');";
 
 // //console.log(mBuffer);
 // //console.log(mImportsBuffer);
@@ -345,7 +361,7 @@ if (argv['migrate']) {
                       var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn(";
                       migContent += "\n    '" + relationName + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
                       migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn('";
-                      migContent += relationName + "', '" + col_name + "')\n  }\n};"
+                      migContent += relationName + "', '" + col_name + "')\n  }\n};";
 
                       execSync('npx sequelize-cli migration:generate --name ' + col_name);
                       var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
@@ -359,7 +375,7 @@ if (argv['migrate']) {
                   var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.addColumn(";
                   migContent += "\n    '" + relationName + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
                   migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn('";
-                  migContent += relationName + "', '" + col_name + "')\n  }\n};"
+                  migContent += relationName + "', '" + col_name + "')\n  }\n};";
 
                   execSync('npx sequelize-cli migration:generate --name ' + col_name);
                   var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
@@ -376,7 +392,7 @@ if (argv['migrate']) {
             var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn(";
             migContent += "\n     '" + relationName + "',\n      '" + del_name + "'\n   );\n },\n\n down: function(queryInterface, Sequelize) {\n  return queryInterface.addColumn(";
             migContent += "\n    '" + relationName + "',\n     '" + del_name + "',\n    {\n     type: Sequelize." +  del_type.toUpperCase();
-            migContent += ",\n     allowNull: true\n    }\n  )\n };"
+            migContent += ",\n     allowNull: true\n    }\n  )\n };";
             console.log(migContent);
 
             execSync('npx sequelize-cli migration:generate --name ' + col_name);
@@ -388,7 +404,7 @@ if (argv['migrate']) {
 
           var migContent = '';
           migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.createTable('";
-          migContent += camel_case(relationName) + "', {"
+          migContent += camel_case(relationName) + "', {";
           
           for (var q = 0; q < cols.length; q++) {
             var temp = cols[q].split(':');
@@ -401,14 +417,14 @@ if (argv['migrate']) {
             }
             migContent += "\n        allowNull: false\n      }";
             if (q < cols.length - 1) {
-              migContent += ","
+              migContent += ",";
             }
           }
 
           migContent += "\n   });\n  },\n\n  down: (queryInterface, Sequelize) => {\n    return queryInterface.dropTable('";
-          migContent += camel_case(relationName) + "');\n  }\n};"
+          migContent += camel_case(relationName) + "');\n  }\n};";
 
-          console.log(migContent)
+          console.log(migContent);
 
           execSync('npx sequelize-cli migration:generate --name ' + camel_case(relationName));
           var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
@@ -449,25 +465,25 @@ function append_type(name) {
 
 function resolve_block_mutations(name, fields) {
   var block = '';
-  block = name + ".create({"
+  block = name + ".create({";
   for (var f = 0; f < fields.length; f++) {
-    block += fields[f] + ": "  
+    block += fields[f] + ": ";  
     if (fields[f] === 'created_date') {
-      block += "Sequelize.fn('NOW')"
+      block += "Sequelize.fn('NOW')";
     } else {
-      block += "args['" + fields[f] + "']"
+      block += "args['" + fields[f] + "']";
     }
     
     if (f !== fields.length - 1) {
-      block += ", "
+      block += ", ";
     }
   }
-  block += "});"
+  block += "});";
   return block;
 }
 
 function resolve_block_queries(name) {
-  return "  resolve(parentValue, args) {\n      return " + name + ".findAll();\n  }"
+  return "  resolve(parentValue, args) {\n      return " + name + ".findAll();\n  }";
 }
 
 function resolve_block_types(name, type) {
@@ -486,18 +502,18 @@ function make_plural(name) {
     return name + 's';
 }
 
-function get_types_for_column(column, type) {
-  // code to be executed
+// function get_types_for_column(column, type) {
+//   // code to be executed
 
-}
+// }
 
-function have_same_elements(array_one, array_two) {
-  // code to be executed
-}
+// function have_same_elements(array_one, array_two) {
+//   // code to be executed
+// }
 
-function snake_case(name){
+// function snake_case(name){
   
-}
+// }
 
 function camel_case(name){
   return name
@@ -508,11 +524,4 @@ function camel_case(name){
 
 var relations = config['Relations'];
 
-var relations_code = "";
 
-for (const relation of relations){
-
-	//console.log(relation);
-	var name = Object.keys(relation)[0];
-
-}

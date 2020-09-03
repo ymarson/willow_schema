@@ -41,13 +41,15 @@ const CustomerType = new GraphQLObjectType({
       resolve (c) {
         return new Date(c.created_date);
       }
-    }
+    },
     messages: {
       type: GraphQLList(MessageType),
       resolve (c) {
         return c.getMessages();
       }
     }
+  }; 
+}
 });
 const MessageType = new GraphQLObjectType({
   name: 'Message',
@@ -89,13 +91,15 @@ const MessageType = new GraphQLObjectType({
       resolve (c) {
         return new Date(c.created_date);
       }
-    }
+    },
     customer: {
       type: GraphQLList(CustomerType),
       resolve (c) {
         return c.getCustomer();
       }
     }
+  }; 
+}
 });
 const ToyType = new GraphQLObjectType({
   name: 'Toy',
@@ -114,7 +118,8 @@ const ToyType = new GraphQLObjectType({
         return c.name;
       }
     }
-
+  }; 
+}
 });
 const MovieType = new GraphQLObjectType({
   name: 'Movie',
@@ -133,7 +138,8 @@ const MovieType = new GraphQLObjectType({
         return c.name;
       }
     }
-
+  }; 
+}
 });
 
 //end types
