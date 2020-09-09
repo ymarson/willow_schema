@@ -21,7 +21,7 @@ Relations:
       columns: [id: Int, customer_id: Int, product_id: Int, body: String, created_date: Date]
       queries: [all-all] 
 ```
-3. Set up Postgres 
+3. Set up Postgres database - this database should exist and you will need to have access to it
 
 4. Generate Willow to apply these changes, use migrate flag to run with migrations
 
