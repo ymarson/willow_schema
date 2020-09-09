@@ -277,14 +277,22 @@ for (var x = 0; x < relations.length; x++) {
 mBuffer += "\n  }\n});\n\n";
 mBuffer += "\n\nexports.mutation = RootMutation;";
 
-mImportsBuffer = "const graphql = require('graphql');\nconst Sequelize = require('sequelize')\nconst { Customer } = require('../db');\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;\nconst { CustomerType } = require('./types');";
+for (var x = 0; x < relations.length; x++) {
+  var currentRelation = relations[x];
+  var relationName = Object.keys(currentRelation)[0];
 
-// //console.log(mBuffer);
-// //console.log(mImportsBuffer);
+  mImportsBuffer += "\nconst { " + relationName + "Type } = require('./types');";
+}
+
+//console.log('mImportsBuffer: \n' + mImportsBuffer);
+
+
 mutations_buffer = mutations_buffer.replace(/(?<=\/\/start imports\n\n).*(?=\n\/\/end imports)/sg, mImportsBuffer);
-//console.log(mBuffer);
+//console.log('mBuffer:\n' + mBuffer);
+//console.log('mImports' + mImportsBuffer);
 mutations_buffer = mutations_buffer.replace(/(?<=\/\/start mutation\n\n).*(?=\n\/\/end mutation)/sg, mBuffer);
 
+//console.log('mutations_buffer:\n' + mutations_buffer)
 fs.writeFileSync('schemas/mutations.js', mutations_buffer);
 
 //🥶TODO: check if argument has been passed if user wants to migrate
