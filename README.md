@@ -35,4 +35,4 @@ npm run willow-generate --migrate
 npm run willow-start
 ```
 
-6. Open localhost:3100
+6. Open localhost:3000
