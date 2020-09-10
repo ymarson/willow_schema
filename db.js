@@ -6,9 +6,11 @@ const dbSync = process.env.DB_SYNC || 'false';
 
 //start relations
 
+
 //end relations
 
 //start associations
+
 
 //end associations
 
@@ -21,5 +23,6 @@ if ( dbSync == 'true' ){
 }
 
 //start exports
+
 
 //end exports
