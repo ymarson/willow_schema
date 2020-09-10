@@ -23,7 +23,7 @@ var opts = {
 };
 
 const conn = new Sequelize(databaseName, databaseUser, databasePassword, opts);
-console.log(conn);
+//console.log(conn);
 
 module.exports = {
     conn: conn,
