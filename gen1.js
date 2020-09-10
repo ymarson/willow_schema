@@ -271,6 +271,13 @@ for (var x = 0; x < relations.length; x++) {
   var currentRelation = relations[x];
   var relationName = Object.keys(currentRelation)[0];
 
+  mImportsBuffer += "\nconst { " + relationName + " } = require('../db');";
+}
+
+for (var x = 0; x < relations.length; x++) {
+  var currentRelation = relations[x];
+  var relationName = Object.keys(currentRelation)[0];
+
   mImportsBuffer += "\nconst { " + relationName + "Type } = require('./types');";
 }
 
