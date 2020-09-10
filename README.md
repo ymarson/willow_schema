@@ -41,15 +41,16 @@ Relations:
     const databaseName= process.env.DATABASE_NAME || 'demo';
     const databaseUser = process.env.DATABASE_USER || 'demouser'
     ```
+    d. Export your database variables:
 
-```bash
-export DATABASE_HOST=localhost
-export DATABASE_PORT=5432
-export DATABASE_USER=platform
-export DATABASE_PASSWORD=
-export DATABASE_USE_SSL=false
-export DATABASE_NAME=demo2
-```
+    ```bash
+    export DATABASE_HOST=localhost
+    export DATABASE_PORT=5432
+    export DATABASE_USER=platform
+    export DATABASE_PASSWORD=
+    export DATABASE_USE_SSL=false
+    export DATABASE_NAME=demo
+    ```
 
 4. Generate Willow to apply these changes, use migrate flag optionally to run with migrations
 
