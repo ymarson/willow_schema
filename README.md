@@ -23,6 +23,13 @@ Relations:
 ```
 3. Set up Postgres database - this database should exist and you will need to have access to it
 
+export DATABASE_HOST=localhost
+export DATABASE_PORT=5432
+export DATABASE_USER=platform
+export DATABASE_PASSWORD=
+export DATABASE_USE_SSL=false
+export DATABASE_NAME=demo2
+
 4. Generate Willow to apply these changes, use migrate flag optionally to run with migrations
 
 ```bash
