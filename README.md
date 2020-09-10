@@ -1,6 +1,6 @@
 ## Installation
 
-1. Install the necessary dependencies
+1. Locate into the willow_schemas directory and then install the necessary dependencies
 
 ```bash
 npm install
@@ -26,7 +26,12 @@ Relations:
 4. Generate Willow to apply these changes, use migrate flag optionally to run with migrations
 
 ```bash
-npm run willow-generate (--migrate)
+npm run willow-generate 
+```
+or
+
+```bash
+npm run willow-generate-migrate
 ```
 
 5. Run Willow to start your backend 
