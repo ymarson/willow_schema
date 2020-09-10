@@ -1,9 +1,6 @@
 
 const graphql = require('graphql');
-const Sequelize = require('sequelize')
-const { Customer } = require('../db');
-const { Toy } = require('../db');
-const { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;
+
 
 //start imports
 
