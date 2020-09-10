@@ -1,6 +1,7 @@
 const { GraphQLString, GraphQLObjectType, GraphQLInt, GraphQLID, GraphQLList } = require("graphql");
 //start imports
 
+
 //end imports
 
 const RootQuery = new GraphQLObjectType({
@@ -9,6 +10,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
 
 //start queries
+
 
 //end queries
   },
