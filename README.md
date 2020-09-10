@@ -15,7 +15,7 @@ Relations:
       columns: [id: Int, first_name: String, last_name: String, tier_id: Int, created_date: Date]
       queries: [all-all]
   - Message:
-      columns: [id: Int, customer_id: Int, body: String, inout: Int, message_type_id: Int, created_date: Date]
+      columns: [id: Int, customer_id: Int, body: String, message_type_id: Int]
       queries: [all-all]
   - Order:
       columns: [id: Int, customer_id: Int, product_id: Int, body: String, created_date: Date]
@@ -36,3 +36,20 @@ npm run willow-start
 ```
 
 6. Open localhost:3000
+
+7. Add data by mutation via GraphQL or by inserting manually in Postgres
+
+e.g of mutation:
+
+```javascript
+mutation { 
+	addMessage(id: 6, customer_id: 44, body: "Hello there", message_type_id: 5)
+	{ id } 
+}
+```
+
+e.g of adding manually
+
+```javascript
+demo2=# insert into message (id, customer_id, body, message_type_id) values (6, 44, 'Hello there', 5);
+```
