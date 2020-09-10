@@ -19,7 +19,8 @@
   "devDependencies": {},
   "scripts": {
     "willow-generate": "node gen1.js && echo 'Generating. Not creating migration files. For that option use --migrate'",
-    "willow-start": "node app.js"
+    "willow-start": "node app.js",
+    "willow-start-migrate": "node app.js --migrate"
   },
   "repository": {
     "type": "git",
