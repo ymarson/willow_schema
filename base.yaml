@@ -7,17 +7,6 @@ Relations:
   - Message:
       columns: [id: Int, customer_id: Int, body: String, inout: Int, message_type_id: Int, created_date: Date]
       queries: [all-all, by-pk]
-  - Toy: 
-      columns: [id: Int, name: String]   
-      queries: [all-all, all-product_version_id]
-  - Movie:
-      columns: [id: Int, name: String]   
-      queries: [all-all, all-product_version_id]
-
- 
-
                    
 Associations:
   - Customer: [ hasMany: Message ]
-  - Message: [ belongsTo: Customer ]
-  
