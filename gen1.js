@@ -267,21 +267,36 @@ for (var x = 0; x < relations.length; x++) {
 mBuffer += "\n  }\n});\n\n";
 mBuffer += "\n\nexports.mutation = RootMutation;";
 
-mImportsBuffer = "const Sequelize = require('sequelize')\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;"
+mImportsBuffer = "const Sequelize = require('sequelize')\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;";
+
+mImportsBuffer += "\nconst { ";
 
 for (var x = 0; x < relations.length; x++) {
   var currentRelation = relations[x];
   var relationName = Object.keys(currentRelation)[0];
 
-  mImportsBuffer += "\nconst { " + relationName + " } = require('../db');";
+  mImportsBuffer += relationName;
+
+  if (x !== relations.length - 1) {
+    mImportsBuffer += ", ";
+  }
 }
+
+mImportsBuffer += " } = require('../db');";
+mImportsBuffer += "\nconst { ";
 
 for (var x = 0; x < relations.length; x++) {
   var currentRelation = relations[x];
   var relationName = Object.keys(currentRelation)[0];
 
-  mImportsBuffer += "\nconst { " + relationName + "Type } = require('./types');";
+  mImportsBuffer += relationName + "Type";
+
+  if (x !== relations.length - 1) {
+    mImportsBuffer += ", ";
+  }
 }
+
+mImportsBuffer += " } = require('./types');";
 
 //console.log('mImportsBuffer: \n' + mImportsBuffer);
 
