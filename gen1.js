@@ -238,7 +238,24 @@ for (var x = 0; x < relations.length; x++) {
   var currentRelation = relations[x];
   var relationName = Object.keys(currentRelation)[0];
 
-  mBuffer += "    add" + relationName + ": {\n      type: " + append_type(relationName) + ",\n       args: {\n        name: { type: GraphQLString }\n       },\n";
+  mBuffer += "    add" + relationName + ": {\n      type: " + append_type(relationName) + ",\n       args: {\n"
+  for (var i = 0; i < currentRelation[ relationName ].columns.length; i++) {
+    var original = currentRelation[ relationName ].columns[i].split(" ");
+    original[0] = original[0].substring(0, original[0].length - 1);
+    name = original[0];
+    type = original[1];
+
+    mBuffer += "        " + name + ": { type: " + graphQL_equivalent(type) + " }";
+
+    if (i !== currentRelation[ relationName ].columns.length - 1) {
+      mBuffer += ",\n"
+    } else {
+      mBuffer += "\n"
+    }
+  }
+  
+  //mBuffer += "        name: { type: GraphQLString }\n       },\n";
+  mBuffer += "       },\n";
   mBuffer += "       resolve(parentValue, args) {\n"; 
 
   var cols = [];
