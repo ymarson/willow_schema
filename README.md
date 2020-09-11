@@ -17,9 +17,6 @@ Relations:
   - Message:
       columns: [id: Int, customer_id: Int, body: String, message_type_id: Int]
       queries: [all-all]
-  - Order:
-      columns: [id: Int, customer_id: Int, product_id: Int, body: String, created_date: Date]
-      queries: [all-all] 
 ```
 3. Set up Postgres database - this database should exist and you will need to have access to it:
     a. Install Postgres 
