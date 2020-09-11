@@ -47,18 +47,18 @@ for (var x = 0; x < relations.length; x++) {
     //extra logic for IDs //
     if ( name == 'id') {
       has_id = true;
-      column = name + ": {\n\ttype: Sequelize." + type_map[type] + ", \n\tautoIncrement: true" + ", \n\tprimaryKey: true, \n\tallowNull: false\n}, \n";
+      column = "  " + name + ": {\n\ttype: Sequelize." + type_map[type] + ", \n\tautoIncrement: true" + ", \n\tprimaryKey: true, \n\tallowNull: false\n  }, \n";
       cols += column;
       
     } else if (type === "StringN") {
-      column = name + ": {\n\ttype: Sequelize.";
+      column = "  " + name + ": {\n\ttype: Sequelize.";
       cols += column;
     } else {
       //get rid of last comma:
       if (i === currentRelation[ relationName ].columns.length - 1) {
-        column = name + ": {\n\ttype: Sequelize." + type_map[type] + ", \n\tallowNull: false\n} \n";
+        column = "  " + name + ": {\n\ttype: Sequelize." + type_map[type] + ", \n\tallowNull: false\n   } \n";
       } else {
-         column = name + ": {\n\ttype: Sequelize." + type_map[type] + ", \n\tallowNull: false\n}, \n"; 
+         column = "  " + name + ": {\n\ttype: Sequelize." + type_map[type] + ", \n\tallowNull: false\n  }, \n"; 
       }
       
       cols += column;
@@ -420,35 +420,35 @@ if (argv['migrate']) {
             fs.writeFileSync(fileName.toString().trim(), migContent);
           }
       } else {
-          console.log('table ' + relationName + '  doesnt exist');
+        console.log('table ' + relationName + '  doesnt exist');
 
-          var migContent = '';
-          migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.createTable('";
-          migContent += camel_case(relationName) + "', {";
-          
-          for (var q = 0; q < cols.length; q++) {
-            var temp = cols[q].split(':');
-            var name = temp[0];
-            var type = temp[1];
-            type = type.slice(1);
-            migContent += "\n       " + name + " {\n        type: Sequelize." + type.toUpperCase() + ",";
-            if (name.includes('id')) {
-              migContent += "\n        autoIncrement: true,\n        primaryKey: true,";
-            }
-            migContent += "\n        allowNull: false\n      }";
-            if (q < cols.length - 1) {
-              migContent += ",";
-            }
+        var migContent = '';
+        migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.createTable('";
+        migContent += camel_case(relationName) + "', {";
+        
+        for (var q = 0; q < cols.length; q++) {
+          var temp = cols[q].split(':');
+          var name = temp[0];
+          var type = temp[1];
+          type = type.slice(1);
+          migContent += "\n       " + name + " {\n        type: Sequelize." + type.toUpperCase() + ",";
+          if (name.includes('id')) {
+            migContent += "\n        autoIncrement: true,\n        primaryKey: true,";
           }
+          migContent += "\n        allowNull: false\n      }";
+          if (q < cols.length - 1) {
+            migContent += ",";
+          }
+        }
 
-          migContent += "\n   });\n  },\n\n  down: (queryInterface, Sequelize) => {\n    return queryInterface.dropTable('";
-          migContent += camel_case(relationName) + "');\n  }\n};";
+        migContent += "\n   });\n  },\n\n  down: (queryInterface, Sequelize) => {\n    return queryInterface.dropTable('";
+        migContent += camel_case(relationName) + "');\n  }\n};";
 
-          console.log(migContent);
+        console.log(migContent);
 
-          execSync('npx sequelize-cli migration:generate --name ' + camel_case(relationName));
-          var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
-          fs.writeFileSync(fileName.toString().trim(), migContent);
+        execSync('npx sequelize-cli migration:generate --name ' + camel_case(relationName));
+        var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
+        fs.writeFileSync(fileName.toString().trim(), migContent);
       }
       //check here for Deleted table //console.log(tmp_old_cols);
   }
