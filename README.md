@@ -76,7 +76,7 @@ npm run sync-db
 npm run willow-start
 ```
 
-7. Open localhost:3000
+7. Open http://localhost:3000
 
 8. Add data by mutation via GraphQL or by inserting manually in Postgres
 
