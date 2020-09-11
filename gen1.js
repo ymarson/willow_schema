@@ -286,7 +286,7 @@ for (var x = 0; x < relations.length; x++) {
 mBuffer += "\n  }\n});\n\n";
 mBuffer += "\n\nexports.mutation = RootMutation;\n";
 
-mImportsBuffer = "const Sequelize = require('sequelize')\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLDate } = graphql;";
+mImportsBuffer = "\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLDate } = graphql;";
 
 mImportsBuffer += "\nconst { ";
 
