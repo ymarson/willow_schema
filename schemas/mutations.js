@@ -1,14 +1,10 @@
 
 const graphql = require('graphql');
-
+const Sequelize = require('sequelize')
 
 //start imports
 
 
-const { CustomerType } = require('./types');
-const { MessageType } = require('./types');
-const { ToyType } = require('./types');
-const { MovieType } = require('./types');
 //end imports
 
 //start mutation
