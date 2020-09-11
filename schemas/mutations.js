@@ -25,35 +25,7 @@ const RootMutation = new GraphQLObjectType({
        resolve(parentValue, args) {
         Customer.create({id: args['id'], first_name: args['first_name'], last_name: args['last_name'], tier_id: args['tier_id'], created_date: Sequelize.fn('NOW')});
        }
-   },
-    addMessage: {
-      type: MessageType,
-       args: {
-        name: { type: GraphQLString }
-       },
-       resolve(parentValue, args) {
-        Message.create({id: args['id'], customer_id: args['customer_id'], body: args['body'], inout: args['inout'], message_type_id: args['message_type_id'], created_date: Sequelize.fn('NOW')});
-       }
-   },
-    addToy: {
-      type: ToyType,
-       args: {
-        name: { type: GraphQLString }
-       },
-       resolve(parentValue, args) {
-        Toy.create({id: args['id'], name: args['name']});
-       }
-   },
-    addMovie: {
-      type: MovieType,
-       args: {
-        name: { type: GraphQLString }
-       },
-       resolve(parentValue, args) {
-        Movie.create({id: args['id'], name: args['name']});
-       }
-    }
-
+   }
   }
 });
 
