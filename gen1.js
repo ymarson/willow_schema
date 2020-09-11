@@ -245,14 +245,18 @@ for (var x = 0; x < relations.length; x++) {
     name = original[0];
     type = original[1];
 
-    mBuffer += "        " + name + ": { type: " + graphQL_equivalent(type) + " }";
+    if (!name.includes('date')) {
+      //console.log('no date in me ', name)
+      mBuffer += "        " + name + ": { type: " + graphQL_equivalent(type) + " }";
 
-    if (i !== currentRelation[ relationName ].columns.length - 1) {
-      mBuffer += ",\n"
-    } else {
-      mBuffer += "\n"
+      if (i !== currentRelation[ relationName ].columns.length - 1) {
+        mBuffer += ",\n" 
+      } else {
+        mBuffer += "\n" //LINE NOT WORKING for some reason
+      }
     }
   }
+  mBuffer = mBuffer.replace(/,\s*$/, "\n"); //TEMP FIX for line not working for some reason
   
   //mBuffer += "        name: { type: GraphQLString }\n       },\n";
   mBuffer += "       },\n";
