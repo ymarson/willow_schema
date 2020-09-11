@@ -12,11 +12,11 @@ npm install
 Relations:
 
   - Customer:
-      columns: [id: Int, first_name: String, last_name: String, tier_id: Int, created_date: Date]
-      queries: [all-all]
+      columns: [id: Int, first_name: String, last_name: String, created_date: Date]
+      queries: [all-all, byone-customer_id]
   - Message:
-      columns: [id: Int, customer_id: Int, body: String, message_type_id: Int]
-      queries: [all-all]
+      columns: [id: Int, customer_id: Int, body: String, message_type_id: Int, created_date: Date]
+      queries: [all-all, by-pk]
 ```
 3. Set up Postgres database - this database should exist and you will need to have access to it:
     a. Install Postgres 
