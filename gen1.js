@@ -442,7 +442,7 @@ if (argv['migrate']) {
 
 }
 
-console.log(argv);
+//console.log(argv);
 
 //execSync('cp base.yaml base_old.yaml') //copy base.yaml to base_old.yaml
 
