@@ -64,15 +64,21 @@ or
 npm run willow-generate-migrate
 ```
 
-5. Run Willow to start your backend 
+5. Sync the database
+
+```bash
+npm run sync-db
+```
+
+6. Run Willow to start your backend 
 
 ```bash
 npm run willow-start
 ```
 
-6. Open localhost:3000
+7. Open localhost:3000
 
-7. Add data by mutation via GraphQL or by inserting manually in Postgres
+8. Add data by mutation via GraphQL or by inserting manually in Postgres
 
 e.g of mutation:
 

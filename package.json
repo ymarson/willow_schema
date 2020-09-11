@@ -20,7 +20,8 @@
   "scripts": {
     "willow-generate": "node gen1.js && echo 'Generating. Not creating migration files. For that option use --migrate'",
     "willow-start": "node app.js",
-    "willow-start-migrate": "node app.js --migrate"
+    "willow-start-migrate": "node app.js --migrate",
+    "sync-db": "export DB_SYNC=true;node db.js;export DB_SYNC=false"
   },
   "repository": {
     "type": "git",
