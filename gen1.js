@@ -112,12 +112,12 @@ fs.writeFileSync('db.js', db_buffer);
 //writing the types.js file
 var types_buffer = fs.readFileSync('schemas/types.js', 'utf8');
 var tBuffer = "";
-var tExportsBuffer = "";
+var tExportsBuffer = "\n";
 for (var x = 0; x < relations.length; x++) {
   var currentRelation = relations[x];
   var relationName = Object.keys(currentRelation)[0];
 
-  tBuffer += "const " + relationName + "Type = new GraphQLObjectType({\n  name: '" + relationName + "',\n  description: 'the description',\n  fields () {\n    return {\n";
+  tBuffer += "\nconst " + relationName + "Type = new GraphQLObjectType({\n  name: '" + relationName + "',\n  description: 'the description',\n  fields () {\n    return {\n";
 
   for (var i = 0; i < currentRelation[ relationName ].columns.length; i++) {
     var original = currentRelation[ relationName ].columns[i].split(" ");
@@ -163,12 +163,11 @@ for (var x = 0; x < relations.length; x++) {
 
  tBuffer += "\n  }; \n}\n});\n";
 
- tExportsBuffer += "exports." + relationName + "Type  = " + relationName + "Type; \n";
+ tExportsBuffer += "exports." + relationName + "Type  = " + relationName + "Type; \n\n";
 
 }
 
 // //console.log(tBuffer);
-// //console.log(tExportsBuffer);
 
 types_buffer = types_buffer.replace(/(?<=\/\/start types\n\n).*(?=\n\/\/end types)/sg, tBuffer);
 
@@ -178,8 +177,8 @@ fs.writeFileSync('schemas/types.js', types_buffer);
 
 // //writing queries.js
 var queries_buffer = fs.readFileSync('schemas/queries.js', 'utf8');
-var qBuffer = "";
-var qImportsBuffer = '';
+var qBuffer = "\n";
+var qImportsBuffer = "\n";
 var firstImports = '';
 var secondImports = '';
 
@@ -195,12 +194,12 @@ for (var x = 0; x < relations.length; x++) {
 
   if (currentRelation[ relationName ].queries.includes('by-pk')) {
     qBuffer += ",\n" + camel_case(relationName) + ": {\n  type: " + append_type(relationName) + ",\n  args: { id: { type: GraphQLID } },\n  ";
-    qBuffer += "resolve(parentValue, args) {\n    return " + relationName + ".findByPk(args['id']);\n  }\n}";
+    qBuffer += "resolve(parentValue, args) {\n    return " + relationName + ".findByPk(args['id']);\n  }\n}\n";
   }
 
   if (currentRelation[ relationName ].queries.includes('all-product_version_id')) {
     qBuffer += ",\n" + make_plural(camel_case(relationName)) + "_By_product_version_id: {\n  type: new GraphQLList(" + append_type(relationName) + "),\n";
-    qBuffer += "  args: { product_version_id: { type: GraphQLID } },\n  resolve(parentValue, args) {\n    return " + relationName + ".findAll( { where: args} );\n  }\n}"; 
+    qBuffer += "  args: { product_version_id: { type: GraphQLID } },\n  resolve(parentValue, args) {\n    return " + relationName + ".findAll( { where: args} );\n  }\n}\n"; 
   }
 
   if (currentRelation[ relationName ].queries.includes('byone-customer_id')) {
@@ -220,10 +219,9 @@ for (var x = 0; x < relations.length; x++) {
 }
 
 qImportsBuffer = "const {" + firstImports + " } = require('../db');" ;
-qImportsBuffer += "\nconst {" + secondImports + " } = require('./types');";
+qImportsBuffer += "\nconst {" + secondImports + " } = require('./types');\n";
 
 // //console.log(qBuffer)
-// //console.log(qImportsBuffer);
 queries_buffer = queries_buffer.replace(/(?<=\/\/start imports\n\n).*(?=\n\/\/end imports)/sg, qImportsBuffer);
 queries_buffer = queries_buffer.replace(/(?<=\/\/start queries\n\n).*(?=\n\/\/end queries)/sg, qBuffer);
 
@@ -231,8 +229,8 @@ fs.writeFileSync('schemas/queries.js', queries_buffer);
 
 // //writing mutations.js file
 var mutations_buffer = fs.readFileSync('schemas/mutations.js', 'utf8');
-var mBuffer = "";
-var mImportsBuffer = '';
+var mBuffer = "\n";
+var mImportsBuffer = "\n";
 
 mBuffer = "const RootMutation = new GraphQLObjectType({\n  name: 'RootMutationType',\n  type: 'Mutation',\n  fields: {\n";
 
@@ -265,7 +263,7 @@ for (var x = 0; x < relations.length; x++) {
 }
 
 mBuffer += "\n  }\n});\n\n";
-mBuffer += "\n\nexports.mutation = RootMutation;";
+mBuffer += "\n\nexports.mutation = RootMutation;\n";
 
 mImportsBuffer = "const Sequelize = require('sequelize')\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;";
 
@@ -296,7 +294,7 @@ for (var x = 0; x < relations.length; x++) {
   }
 }
 
-mImportsBuffer += " } = require('./types');";
+mImportsBuffer += " } = require('./types');\n";
 
 //console.log('mImportsBuffer: \n' + mImportsBuffer);
 
