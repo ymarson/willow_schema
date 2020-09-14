@@ -472,6 +472,7 @@ if (argv['migrate']) {
         fs.writeFileSync(fileName.toString().trim(), migContent);
       }
       //check here for Deleted table //console.log(tmp_old_cols);
+      //WRITE DELTED TABLE MIGRATION here
   }
 
 }
