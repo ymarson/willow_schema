@@ -6,7 +6,7 @@
 npm install
 ```
 
-2. Check the base.yaml file. These file should reflect the way you want to structure your backend (relations etc) e.g
+2. Check the base.yaml file. This file should reflect the way you want to structure your backend (relations etc) e.g
 
 ```yaml
 Relations:
