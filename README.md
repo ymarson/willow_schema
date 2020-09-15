@@ -61,6 +61,8 @@ or
 npm run willow-generate-migrate
 ```
 
+*migration files will be created for new tables, new columns, deleted columns and changed type of column
+
 5. Sync the database
 
 ```bash
