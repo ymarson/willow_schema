@@ -1,4 +1,4 @@
-## Installation
+## Documentation
 
 1. Locate into the willow_schemas directory and then install the necessary dependencies
 
@@ -92,7 +92,7 @@ npm run willow-start
     ```
 
 
-10. Stop the server and edit the base.yaml e.g (add a new table). Then re-generate Willow again but this time with migrations
+10. Stop the server and edit the base.yaml file (e.g add a new table). Then re-generate Willow again but this time with migrations
 
 ```bash
 npm run willow-generate-migrate
