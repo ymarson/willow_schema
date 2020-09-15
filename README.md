@@ -20,6 +20,7 @@ Relations:
 ```
 
 3. Set up Postgres database - this database should exist and you will need to have access to it (skip if already have a working database):
+
     a. Install Postgres 
 
     ```bash
