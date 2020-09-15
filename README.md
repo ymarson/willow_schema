@@ -19,7 +19,8 @@ Relations:
       queries: [all-all, by-pk]
 ```
 
-3. Set up Postgres database - this database should exist and you will need to have access to it (skip if already have a working database):
+3. Set up Postgres database - this database should exist and you will need to have access to it (skip if already have a working database)
+
 
     a. Install Postgres 
 
@@ -90,9 +91,9 @@ npm run willow-start
     ```javascript
     query get_customers {
         customers {
-		    id 
-            first_name
-            last_name
+		id 
+        	first_name
+        	last_name
         }
     }
     ```
