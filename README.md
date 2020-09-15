@@ -18,7 +18,8 @@ Relations:
       columns: [id: Int, customer_id: Int, body: String, message_type_id: Int, created_date: Date]
       queries: [all-all, by-pk]
 ```
-3. Set up Postgres database - this database should exist and you will need to have access to it:
+
+3. Set up Postgres database - this database should exist and you will need to have access to it (skip if already have a working database):
     a. Install Postgres 
 
     ```bash
@@ -33,14 +34,8 @@ Relations:
     create user demouser
     ```
 
-    c. Go to db/connection.js and assign the values to the databaseName and databaseUser variables:
-
-    ```javascript
-    const databaseName= process.env.DATABASE_NAME || 'demo';
-    const databaseUser = process.env.DATABASE_USER || 'demouser'
-    ```
-    d. Export your database variables:
-
+4. Configure your database 
+  
     ```bash
     export DATABASE_HOST=localhost
     export DATABASE_PORT=5432
@@ -50,7 +45,7 @@ Relations:
     export DATABASE_NAME=demo
     ```
 
-4. Generate Willow to apply these changes, use migrate flag optionally to run with migrations
+5. Generate Willow to apply these changes
 
 ```bash
 npm run willow-generate 
@@ -77,19 +72,35 @@ npm run willow-start
 
 7. Open http://localhost:3000
 
-8. Add data by mutation via GraphQL or by inserting manually in Postgres
+8. 
+    a. Add data by using a mutation in GraphQL 
 
-e.g of mutation:
+    ```javascript
+    mutation add_customer {
+        addCustomer(first_name: "Claudia", last_name: "Nobrega") {
+            id
+            first_name
+        }
+    }
+    ```
 
-```javascript
-mutation { 
-	addMessage(id: 6, customer_id: 44, body: "Hello there", message_type_id: 5)
-	{ id } 
-}
+    b. Query for the data you just entered
+
+    ```javascript
+    query get_customers {
+        customers {
+		    id 
+            first_name
+            last_name
+        }
+    }
+    ```
+
+
+9. Stop the server and re-generate Willow again but this time with migrations
+
+```bash
+npm run willow-generate-migrate
 ```
 
-e.g of adding manually
-
-```javascript
-demo2=# insert into message (id, customer_id, body, message_type_id) values (6, 44, 'Hello there', 5);
-```
+*migration files will be created for new tables, new columns, deleted columns and changed type of column
