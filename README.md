@@ -6,7 +6,7 @@
 npm install
 ```
 
-2. Make changes to the base.yaml file. These changes should reflect the way you want to structure your backend (relations etc) e.g
+2. Check the base.yaml file. These file should reflect the way you want to structure your backend (relations etc) e.g
 
 ```yaml
 Relations:
@@ -52,29 +52,22 @@ Relations:
 ```bash
 npm run willow-generate 
 ```
-or
 
-```bash
-npm run willow-generate-migrate
-```
-
-*migration files will be created for new tables, new columns, deleted columns and changed type of column
-
-5. Sync the database
+6. Sync the database
 
 ```bash
 npm run sync-db
 ```
 
-6. Run Willow to start your backend 
+7. Run Willow to start your backend 
 
 ```bash
 npm run willow-start
 ```
 
-7. Open http://localhost:3000
+8. Open http://localhost:3000
 
-8. 
+9. 
     a. Add data by using a mutation in GraphQL 
 
     ```javascript
@@ -99,10 +92,10 @@ npm run willow-start
     ```
 
 
-9. Stop the server and re-generate Willow again but this time with migrations
+10. Stop the server and edit the base.yaml e.g (add a new table). Then re-generate Willow again but this time with migrations
 
 ```bash
 npm run willow-generate-migrate
 ```
 
-*migration files will be created for new tables, new columns, deleted columns and changed type of column
+*migration files can be created for new tables, new columns, deleted columns and changed type of column
