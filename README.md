@@ -47,7 +47,7 @@ Relations:
     export DATABASE_NAME=demo
     ```
 
-5. Generate Willow to apply these changes
+5. Generate Willow to apply the base
 
 ```bash
 npm run willow-generate 
