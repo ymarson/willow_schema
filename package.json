@@ -19,7 +19,7 @@
   "devDependencies": {},
   "scripts": {
     "willow-generate": "node gen1.js && echo 'Generating. Not creating migration files. For that option use --migrate'",
-    "willow-generate-migrate": "node app.js --migrate",
+    "willow-generate-migrate": "node gen1.js --migrate",
     "willow-start": "node app.js",
     "sync-db": "export DB_SYNC=true;node db.js;export DB_SYNC=false"
   },
