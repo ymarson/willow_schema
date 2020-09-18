@@ -3,7 +3,7 @@ Relations:
 
   - Customer:
       columns: [id: Int, first_name: String, last_name: String, created_date: Date]
-      queries: [all-all, byone-customer_id]
+      queries: [all-all]
   - Message:
       columns: [id: Int, customer_id: Int, body: String, message_type_id: Int, created_date: Date]
       queries: [all-all, by-pk]
