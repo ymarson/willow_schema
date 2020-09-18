@@ -354,8 +354,8 @@ if (argv['migrate']) {
 
   var base_rels = config.Relations;
   var base_old_rels = oldConfig.Relations;
-  console.log(base_old_rels);
-  console.log(base_rels);
+  //console.log(base_old_rels);
+  //console.log(base_rels);
 
 
   var relations_old = {};
@@ -377,7 +377,7 @@ if (argv['migrate']) {
       
   }
   
-  console.log(relations_old);
+  //console.log(relations_old);
 
 
   for (var i = 0; i < base_rels.length; i++) {
@@ -426,7 +426,7 @@ if (argv['migrate']) {
           //DELETED COLUMNS:
           console.log(tmp_old_cols);
           if (!_.isEmpty(tmp_old_cols)) {
-            console.log('this column has been deleted');
+            //console.log('this column has been deleted');
             var del_name = Object.keys(tmp_old_cols)[0];
             var del_type = Object.values(tmp_old_cols)[0];
 
@@ -434,14 +434,14 @@ if (argv['migrate']) {
             migContent += "\n     '" + relationName + "',\n      '" + del_name + "'\n   );\n },\n\n down: function(queryInterface, Sequelize) {\n  return queryInterface.addColumn(";
             migContent += "\n    '" + relationName + "',\n     '" + del_name + "',\n    {\n     type: Sequelize." +  del_type.toUpperCase();
             migContent += ",\n     allowNull: true\n    }\n  )\n };";
-            console.log(migContent);
+            //console.log(migContent);
 
             execSync('npx sequelize-cli migration:generate --name ' + col_name);
             var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
             fs.writeFileSync(fileName.toString().trim(), migContent);
           }
       } else {
-        console.log('table ' + relationName + '  doesnt exist');
+        //console.log('table ' + relationName + '  doesnt exist');
 
         var migContent = '';
         migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.createTable('";
@@ -465,7 +465,7 @@ if (argv['migrate']) {
         migContent += "\n   });\n  },\n\n  down: (queryInterface, Sequelize) => {\n    return queryInterface.dropTable('";
         migContent += camel_case(relationName) + "');\n  }\n};";
 
-        console.log(migContent);
+        //console.log(migContent);
 
         execSync('npx sequelize-cli migration:generate --name ' + camel_case(relationName));
         var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
