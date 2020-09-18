@@ -474,20 +474,18 @@ if (argv['migrate']) {
       //check here for Deleted table //console.log(tmp_old_cols);
       //WRITE DELTED TABLE MIGRATION here
   }
-
+   
+  //execSync('npx sequelize-cli db:migrate');
 }
 
 //console.log(argv);
 
 //execSync('cp base.yaml base_old.yaml') //copy base.yaml to base_old.yaml
 
-//new table being added doesnt work 
-//write the migration file once write at the end here, conditionally sort out file name
+
 
 //add index
 
-//npx db migrate command
-//option to do migration 
 
 
 
