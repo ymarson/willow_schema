@@ -100,4 +100,4 @@ npm run willow-generate-migrate
 
 *migration files can be created for new tables, new columns, deleted columns and changed type of column
 
-11. Remember to re-sync the database before restarting Willow
+11. Restart Willow
