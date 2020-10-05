@@ -91,8 +91,21 @@ npm run willow-start
     }
     ```
 
-
-10. Stop the server and edit the base.yaml file by adding a new column. Then re-generate Willow again but this time with migrations
+10. Check if the data you entered has been added to the database
+	a. Open a new command line and login to database:
+	
+	```bash
+   	psql demo
+	\d
+    	```
+	
+	b. Query the customer table
+	
+	```bash
+   	select * from customer;
+    	```
+	
+11. Stop the server and edit the base.yaml file by adding a new column. Then re-generate Willow again but this time with migrations
 
 ```bash
 npm run willow-generate-migrate
@@ -100,4 +113,4 @@ npm run willow-generate-migrate
 
 *migration files can be created for new tables, new columns, deleted columns and changed type of column
 
-11. Restart Willow
+12. Restart Willow
