@@ -97,6 +97,9 @@ npm run willow-start
 	```bash
 	psql demo
 	```
+    ```javascript 
+	\d
+	```
 	
 	b. Query the customer table
 	
