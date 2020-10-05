@@ -31,9 +31,9 @@ Relations:
     b. Login to Postgres and create a Postgres database and Postgres user
 
      ```bash
-    psql
-    create database demo
-    create user demouser
+    psql postgres
+    create database demo;
+    create user demouser;
     ```
 
 4. Configure your database 
