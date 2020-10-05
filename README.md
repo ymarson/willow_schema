@@ -92,6 +92,7 @@ npm run willow-start
     ```
 
 10. Check if the data you entered has been added to the database
+
 	a. Open a new command line and login to database:
 	
 	```bash
