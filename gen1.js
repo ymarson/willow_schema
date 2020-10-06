@@ -471,6 +471,7 @@ if (argv['migrate']) {
         var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
         fs.writeFileSync(fileName.toString().trim(), migContent);
       }
+      execSync('npx sequelize-cli db:migrate');
       //check here for Deleted table //console.log(tmp_old_cols);
       //WRITE DELTED TABLE MIGRATION here
   }
