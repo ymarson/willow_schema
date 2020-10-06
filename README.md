@@ -96,7 +96,7 @@ npm run willow-start
 	a. Open a new command line and login to database:
 	
 	```bash
-	psql demo
+	psql -U demouser demo
 	```
     ```javascript 
 	\d
