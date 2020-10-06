@@ -34,6 +34,8 @@ Relations:
     psql postgres
     create database demo;
     //create user demouser;
+    //psql -U demouser demo
+    //GRANT ALL PRIVILEGES ON TABLE * TO demouser;
     ```
 
 4. Configure your database 
