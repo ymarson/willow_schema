@@ -33,7 +33,7 @@ Relations:
      ```bash
     psql postgres
     create database demo;
-    create user demouser;
+    //create user demouser;
     ```
 
 4. Configure your database 
