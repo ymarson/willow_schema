@@ -400,9 +400,9 @@ if (argv['migrate']) {
                       console.log('different type');
 
                       var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn(";
-                      migContent += "\n    '" + relationName + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
+                      migContent += "\n    '" + camel_case(relationName) + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
                       migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn('";
-                      migContent += relationName + "', '" + col_name + "')\n  }\n};";
+                      migContent += camel_case(relationName) + "', '" + col_name + "')\n  }\n};";
 
                       execSync('npx sequelize-cli migration:generate --name ' + col_name);
                       var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
@@ -414,9 +414,9 @@ if (argv['migrate']) {
                   console.log('column ' + col_name + ' doesnt exist');
 
                   var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.addColumn(";
-                  migContent += "\n    '" + relationName + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
+                  migContent += "\n    '" + camel_case(relationName) + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
                   migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn('";
-                  migContent += relationName + "', '" + col_name + "')\n  }\n};";
+                  migContent += camel_case(relationName) + "', '" + col_name + "')\n  }\n};";
 
                   execSync('npx sequelize-cli migration:generate --name ' + col_name);
                   var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
@@ -431,9 +431,9 @@ if (argv['migrate']) {
             var del_type = Object.values(tmp_old_cols)[0];
 
             var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn(";
-            migContent += "\n     '" + relationName + "',\n      '" + del_name + "'\n   );\n },\n\n down: function(queryInterface, Sequelize) {\n  return queryInterface.addColumn(";
-            migContent += "\n    '" + relationName + "',\n     '" + del_name + "',\n    {\n     type: Sequelize." +  del_type.toUpperCase();
-            migContent += ",\n     allowNull: true\n    }\n  )\n };";
+            migContent += "\n     '" + camel_case(relationName) + "',\n      '" + del_name + "'\n   );\n },\n\n down: function(queryInterface, Sequelize) {\n  return queryInterface.addColumn(";
+            migContent += "\n    '" + camel_case(relationName) + "',\n     '" + del_name + "',\n    {\n     type: Sequelize." +  del_type.toUpperCase();
+            migContent += ",\n     allowNull: true\n    }\n  )\n }\n};";
             //console.log(migContent);
 
             execSync('npx sequelize-cli migration:generate --name ' + col_name);
