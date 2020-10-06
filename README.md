@@ -32,10 +32,10 @@ Relations:
 
      ```bash
     psql postgres
-    create database demo;
-    create user demouser;
-    psql -U demouser demo
-    GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO demouser;
+    postgres=# create database demo;
+    postgres=# create user demouser;
+    postgres=# \c demo
+    demo=# GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO demouser;
     ```
 
 4. Configure your database 
