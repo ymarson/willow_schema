@@ -35,7 +35,7 @@ Relations:
     create database demo;
     create user demouser;
     psql -U demouser demo
-    GRANT ALL PRIVILEGES ON TABLE * TO demouser;
+    GRANT ALL PRIVILEGES ON ALL TABLES TO demouser
     ```
 
 4. Configure your database 
