@@ -43,7 +43,7 @@ Relations:
     ```bash
     export DATABASE_HOST=localhost
     export DATABASE_PORT=5432
-    export DATABASE_USER=platform
+    export DATABASE_USER=demouser
     export DATABASE_PASSWORD=
     export DATABASE_USE_SSL=false
     export DATABASE_NAME=demo
