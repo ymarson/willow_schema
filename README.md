@@ -31,7 +31,7 @@ Relations:
     b. Login to Postgres and create a Postgres database and Postgres user
 
      ```bash
-    psql postgres
+    $ psql postgres
     postgres=# create database demo;
     postgres=# create user demouser;
     postgres=# \c demo
@@ -95,13 +95,13 @@ npm run willow-start
 
 10. Check if the data you entered has been added to the database
 
-	a. Open a new command line and login to database:
+	a. Make sure you are accessing the demo database correctly
 	
 	```bash
-	psql -U demouser demo
+	$ psql -U demouser demo
 	```
     ```javascript 
-	\d
+	demo=# \d
 	```
 	
 	b. Query the customer table
