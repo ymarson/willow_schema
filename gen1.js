@@ -452,6 +452,9 @@ if (argv['migrate']) {
           var name = temp[0];
           var type = temp[1];
           type = type.slice(1);
+          if (type.includes("'")) {
+            type = type.replace("'", "");
+          }
           migContent += "\n       " + name + " {\n        type: Sequelize." + type.toUpperCase() + ",";
           if (name.includes('id')) {
             migContent += "\n        autoIncrement: true,\n        primaryKey: true,";
