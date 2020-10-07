@@ -3,7 +3,7 @@
 1. Locate into the willow_schemas directory and then install the necessary dependencies
 
 ```bash
-npm install
+$ npm install
 ```
 
 2. Check the base.yaml file. This file should reflect the way you want to structure your backend (relations etc) e.g
@@ -25,7 +25,7 @@ Relations:
     a. Install Postgres 
 
     ```bash
-    brew install postgres
+    $ brew install postgres
     ```
 
     b. Login to Postgres and create a Postgres database and Postgres user
@@ -52,19 +52,19 @@ Relations:
 5. Generate Willow to apply the base
 
 ```bash
-npm run willow-generate 
+$ npm run willow-generate 
 ```
 
 6. Sync the database
 
 ```bash
-npm run sync-db
+$ npm run sync-db
 ```
 
 7. Run Willow to start your backend 
 
 ```bash
-npm run willow-start
+$ npm run willow-start
 ```
 
 8. Open http://localhost:3000
@@ -107,7 +107,7 @@ npm run willow-start
 	b. Query the customer table
 	
 	```bash
-   	select * from customer;
+   	demo=# select * from customer;
     ```
 
 	
