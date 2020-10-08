@@ -414,7 +414,9 @@ if (argv['migrate']) {
                   delete tmp_old_cols[col_name];
               } else {
                   console.log('column ' + col_name + ' doesnt exist');
-
+                  if (col_type.includes("Int")) {
+                    col_type = 'Integer';
+                  }
                   var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.addColumn(";
                   migContent += "\n    '" + camel_case(relationName) + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
                   migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.removeColumn('";
