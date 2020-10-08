@@ -452,8 +452,8 @@ if (argv['migrate']) {
           var name = temp[0];
           var type = temp[1];
           type = type.slice(1);
-          if (type.includes("'")) {
-            type = type.replace("'", "");
+          if (type.includes("Int")) {
+            type = 'Integer';
           }
           migContent += "\n       " + name + ": {\n        type: Sequelize." + type.toUpperCase() + ",";
           if (name.includes('id')) {
