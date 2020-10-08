@@ -398,7 +398,9 @@ if (argv['migrate']) {
 
                   if ( tmp_old_cols[ col_name ] != col_type ) {
                       console.log('different type');
-
+                      if (col_type.includes("Int")) {
+                        col_type = 'Integer';
+                      }
                       var migContent = "'use strict';\n\nmodule.exports = {\n  up: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn(";
                       migContent += "\n    '" + camel_case(relationName) + "',\n     '" + col_name + "',\n    {\n     type: Sequelize." +  col_type.toUpperCase();
                       migContent += ",\n     allowNull: true\n     }\n   )\n  },\n\n down: (queryInterface, Sequelize) => {\n    return queryInterface.changeColumn('";
