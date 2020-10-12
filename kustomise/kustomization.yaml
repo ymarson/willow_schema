@@ -11,3 +11,11 @@ configMapGenerator:
   - name: postgreinit
     files:
       - posgres/initdb.sql
+  - name: willow-config
+    literals:
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USER=postgresadmin
+      - DATABASE_PASSWORD=admin123
+      - DATABASE_USE_SSL=false
+      - DATABASE_NAME=postgresdb
