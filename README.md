@@ -2,6 +2,7 @@
 Notes
 - Some versions of node are incompatible - compatible versions include 10.16.3 and 12.19.0
 
+Instructions
 1. Locate into the willow_schemas directory and then install the necessary dependencies
 
 ```bash
