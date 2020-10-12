@@ -1,5 +1,5 @@
 FROM node:lts-alpine as build-stage
-RUN apk add vim psql
+RUN apk add vim
 WORKDIR /app
 COPY package*.json ./
 RUN npm install

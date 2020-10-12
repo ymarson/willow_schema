@@ -16,9 +16,25 @@ spec:
         - name: willow
           image: willow/schema
           command:
-            - sleep
-            - infinity
-          imagePullPolicy: "IfNotPresent"
+            - sh
+            - -c
+            - 'sleep 30 && npm run willow-generate && npm run sync-db && npm run willow-start'
           envFrom:
             - configMapRef:
-                name: postgres-config
+                name: willow-config
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: willow
+  labels:
+    app: willow
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+  selector:
+    app: willow
