@@ -1,9 +1,9 @@
 ## Documentation
 Notes
-- Node version 14 is incompatible with sequelize - please use nvm to change your version to an earlier version (e.g v12.19.0 definitely works)
+- Node version 14 is incompatible with sequelize - please use nvm to change your version to an earlier version 
 
 ```bash
-$ nvm use 8.10.0
+$ nvm use 12.19.0
 ```
 
 Instructions
