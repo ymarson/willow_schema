@@ -1,6 +1,6 @@
 ## Documentation
 Notes
-- Some versions of node are incompatible with sequelize - compatible versions include 10.16.3 and 12.19.0
+- Node version 14 is incompatible with sequelize - please use nvm to change your version to an earlier version (e.g v12.19.0 definitely works)
 
 Instructions
 1. Locate into the willow_schemas directory and then install the necessary dependencies
