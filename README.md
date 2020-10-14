@@ -1,6 +1,6 @@
 ## Documentation
 Notes
-- Node version 14 is incompatible with sequelize - please use nvm to change your version to an earlier version 
+- Node version 14 is incompatible with sequelize - please use nvm to change your version to an earlier version (nvm is only avaliable on mac/linus - windows alternative: https://github.com/coreybutler/nvm-windows)
 
 ```bash
 $ nvm use 12.19.0
