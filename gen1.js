@@ -159,7 +159,7 @@ for (var x = 0; x < relations.length; x++) {
       tBuffer += "    " + camel_case(matchingRelationName) + ": {\n      type: GraphQLList(" + append_type(matchingRelationName) + "),\n";
       tBuffer += "      resolve (c) {\n        return c.get" + matchingRelationName + "();\n      }\n    }";    
     } else if (matchingAssociation[ relationName ].toString().includes('hasOne')) {
-      tBuffer += "    " + camel_case(matchingRelationName) + ": {\n      type: " + append_type(matchingRelationName) + "),\n";
+      tBuffer += "    " + camel_case(matchingRelationName) + ": {\n      type: " + append_type(matchingRelationName) + ",\n";
       tBuffer += "      resolve (c) {\n        return c.get" + matchingRelationName + "();\n      }\n    }";    
     }
  } else {
