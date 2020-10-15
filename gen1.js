@@ -88,6 +88,8 @@ for (var x = 0; x < associations.length; x++) {
       //console.log(aggType)
     } else if (aggType === 'belongsTo') {
         associationsBuffer += associationName + "." + aggType + "(" + attraction + ", {\n\tas: '" + camel_case(attraction) + "',\n\tforeignKey: '" + camel_case(associationName) + "_id',\n\tsourceKey: 'id'\n});\n";
+    } else if (aggType === 'hasOne') {
+        console.log('hasOne');
     } else {
       associationsBuffer += associationName + "." + aggType + "(" + attraction + ", {\n\tas: '" + make_plural(camel_case(attraction)) + "',\n\through: '" + camel_case(associationName) + "_" + camel_case(attraction) + "',\n\tforeignKey: '" + camel_case(associationName) + "_id',\n\tsourceKey: 'id'\n});\n";
     }
