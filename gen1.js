@@ -158,7 +158,10 @@ for (var x = 0; x < relations.length; x++) {
     } else if (matchingAssociation[ relationName ].toString().includes('belongsTo')) {
       tBuffer += "    " + camel_case(matchingRelationName) + ": {\n      type: GraphQLList(" + append_type(matchingRelationName) + "),\n";
       tBuffer += "      resolve (c) {\n        return c.get" + matchingRelationName + "();\n      }\n    }";    
-  }
+    } else if (matchingAssociation[ relationName ].toString().includes('hasOne')) {
+      tBuffer += "    " + camel_case(matchingRelationName) + ": {\n      type: " + append_type(matchingRelationName) + "),\n";
+      tBuffer += "      resolve (c) {\n        return c.get" + matchingRelationName + "();\n      }\n    }";    
+    }
  } else {
   //tBuffer += "\n" DELETE the last comma
   tBuffer = tBuffer.replace(/,\s*$/, "");
