@@ -34,7 +34,8 @@ Relations:
     ```bash
     $ brew install postgres
     ```
-
+    *If you are using windows, you will need to set the path C:\Program Files\PostgreSQL\9.5\bin ;C:\Program Files\PostgreSQL\9.5\lib
+    
     b. Login to Postgres and create a Postgres database and Postgres user
 
      ```bash
