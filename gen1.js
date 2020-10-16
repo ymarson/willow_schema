@@ -229,8 +229,10 @@ qImportsBuffer = "const {" + firstImports + " } = require('../db');" ;
 qImportsBuffer += "\nconst {" + secondImports + " } = require('./types');\n";
 
 // //console.log(qBuffer)
-queries_buffer = queries_buffer.replace(/(?<=\/\/start imports\n\n).*(?=\n\/\/end imports)/sg, qImportsBuffer);
-queries_buffer = queries_buffer.replace(/(?<=\/\/start queries\n\n).*(?=\n\/\/end queries)/sg, qBuffer);
+//queries_buffer = queries_buffer.replace(/(?<=\/\/start imports\n\n).*(?=\n\/\/end imports)/sg, qImportsBuffer);
+queries_buffer = queries_buffer.replace(/(?<=\/\/start imports\r*\n\r*\n).*(?=\r*\n\/\/end imports)/sg, qImportsBuffer);
+//queries_buffer = queries_buffer.replace(/(?<=\/\/start queries\n\n).*(?=\n\/\/end queries)/sg, qBuffer);
+queries_buffer = queries_buffer.replace(/(?<=\/\/start queries\r*\n\r*\n).*(?=\r*\n\/\/end queries)/sg, qBuffer);
 
 fs.writeFileSync('schemas/queries.js', queries_buffer);
 
