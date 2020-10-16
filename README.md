@@ -53,7 +53,7 @@ Relations:
     export DATABASE_HOST=localhost
     export DATABASE_PORT=5432
     export DATABASE_USER=demouser
-    export DATABASE_PASSWORD=
+    export DATABASE_PASSWORD=password
     export DATABASE_USE_SSL=false
     export DATABASE_NAME=demo
     ```
@@ -63,7 +63,7 @@ Relations:
     set DATABASE_HOST=localhost
     set DATABASE_PORT=5432
     set DATABASE_USER=demouser
-    set DATABASE_PASSWORD=
+    set DATABASE_PASSWORD=password
     set DATABASE_USE_SSL=false
     set DATABASE_NAME=demo
     ```
@@ -82,7 +82,9 @@ $ npm run sync-db
 ```
    For windows:
    ```bash
-$ set DB_SYNC=true;node db.js;set DB_SYNC=false
+$ set DB_SYNC=true
+$ node db.js
+$ set DB_SYNC=false
 ```
 
 7. Run Willow to start your backend 
