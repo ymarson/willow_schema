@@ -329,10 +329,10 @@ mImportsBuffer += " } = require('./types');\n";
 //console.log('mImportsBuffer: \n' + mImportsBuffer);
 
 
-mutations_buffer = mutations_buffer.replace(/(?<=\/\/start imports\n\n).*(?=\n\/\/end imports)/sg, mImportsBuffer);
-//console.log('mBuffer:\n' + mBuffer);
-//console.log('mImports' + mImportsBuffer);
-mutations_buffer = mutations_buffer.replace(/(?<=\/\/start mutation\n\n).*(?=\n\/\/end mutation)/sg, mBuffer);
+//mutations_buffer = mutations_buffer.replace(/(?<=\/\/start imports\n\n).*(?=\n\/\/end imports)/sg, mImportsBuffer);
+mutations_buffer = mutations_buffer.replace(/(?<=\/\/start imports\r*\n\r*\n).*(?=\r*\n\/\/end imports)/sg, mImportsBuffer);
+//mutations_buffer = mutations_buffer.replace(/(?<=\/\/start mutation\n\n).*(?=\n\/\/end mutation)/sg, mBuffer);
+mutations_buffer = mutations_buffer.replace(/(?<=\/\/start mutation\r*\n\r*\n).*(?=\r*\n\/\/end mutation)/sg, mBuffer);
 
 //console.log('mutations_buffer:\n' + mutations_buffer)
 fs.writeFileSync('schemas/mutations.js', mutations_buffer);
