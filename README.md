@@ -34,7 +34,7 @@ Relations:
     ```bash
     $ brew install postgres
     ```
-    *If you are using windows, you will need to set the path C:\Program Files\PostgreSQL\9.5\bin ;C:\Program Files\PostgreSQL\9.5\lib
+    *If you are using windows, you will need to set the path C:\Program Files\PostgreSQL\13\bin ;C:\Program Files\PostgreSQL\13\lib where version is 13
     
     b. Login to Postgres and create a Postgres database and Postgres user
 
@@ -47,7 +47,7 @@ Relations:
     ```
 
 4. Configure your database 
-  
+   For mac:
     ```bash
     export DATABASE_HOST=localhost
     export DATABASE_PORT=5432
@@ -55,6 +55,16 @@ Relations:
     export DATABASE_PASSWORD=
     export DATABASE_USE_SSL=false
     export DATABASE_NAME=demo
+    ```
+    
+    For windows:
+    ```bash
+    set DATABASE_HOST=localhost
+    set DATABASE_PORT=5432
+    set DATABASE_USER=demouser
+    set DATABASE_PASSWORD=
+    set DATABASE_USE_SSL=false
+    set DATABASE_NAME=demo
     ```
 
 5. Generate Willow to apply the base
@@ -64,9 +74,13 @@ $ npm run willow-generate
 ```
 
 6. Sync the database
-
+   For mac:
 ```bash
 $ npm run sync-db
+```
+   For windows:
+   ```bash
+$ set DB_SYNC=true;node db.js;set DB_SYNC=false
 ```
 
 7. Run Willow to start your backend 
