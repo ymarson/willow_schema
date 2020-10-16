@@ -174,10 +174,11 @@ for (var x = 0; x < relations.length; x++) {
 }
 
 // //console.log(tBuffer);
+//types_buffer = types_buffer.replace(/(?<=\/\/start types\n\n).*(?=\n\/\/end types)/sg, tBuffer);
+types_buffer = types_buffer.replace(/(?<=\/\/start types\r*\n\r*\n).*(?=\r*\n\/\/end types)/sg, tBuffer);
 
-types_buffer = types_buffer.replace(/(?<=\/\/start types\n\n).*(?=\n\/\/end types)/sg, tBuffer);
-
-types_buffer = types_buffer.replace(/(?<=\/\/start exports\n\n).*(?=\n\/\/end exports)/sg, tExportsBuffer);
+//types_buffer = types_buffer.replace(/(?<=\/\/start exports\n\n).*(?=\n\/\/end exports)/sg, tExportsBuffer);
+types_buffer = types_buffer.replace(/(?<=\/\/start exports\r*\n\r*\n).*(?=\r*\n\/\/end exports)/sg, tExportsBuffer);
 
 fs.writeFileSync('schemas/types.js', types_buffer);
 
