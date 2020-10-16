@@ -46,7 +46,8 @@ Relations:
     demo=# GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO demouser;
     ```
 
-4. Configure your database 
+4. Configure your database
+
    For mac:
     ```bash
     export DATABASE_HOST=localhost
@@ -74,6 +75,7 @@ $ npm run willow-generate
 ```
 
 6. Sync the database
+
    For mac:
 ```bash
 $ npm run sync-db
