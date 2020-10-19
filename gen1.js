@@ -343,6 +343,7 @@ fs.writeFileSync('schemas/mutations.js', mutations_buffer);
 //🥶TODO: check if argument has been passed if user wants to migrate
 
 // //migrations
+var isWin = process.platform === "win32";
 // //🥶TODO: create a baseOld file if it doesn't exist. TEST this
 const argv = yargs
     .command('willow-generate', 'Tells us to generate the schema', {
@@ -419,7 +420,14 @@ if (argv['migrate']) {
                       migContent += camel_case(relationName) + "', '" + col_name + "')\n  }\n};";
 
                       execSync('npx sequelize-cli migration:generate --name ' + col_name);
-                      var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
+                      if (isWin) {
+                        var fileName = execSync("dir /d /o:-n migrations\\*" + col_name + "*").toString();
+                        var re = /(\d+.*?\.js)\b/i;
+                        fileName = fileName.match(re);
+                        //console.log('x' + found[1] + 'x');
+                      } else {
+                        var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
+                      }
                       fs.writeFileSync(fileName.toString().trim(), migContent);
                   }
 
@@ -453,7 +461,14 @@ if (argv['migrate']) {
             //console.log(migContent);
 
             execSync('npx sequelize-cli migration:generate --name ' + col_name);
-            var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
+            if (isWin) {
+               var fileName = execSync("dir /d /o:-n migrations\\*" + col_name + "*").toString();
+               var re = /(\d+.*?\.js)\b/i;
+               fileName = fileName.match(re);
+               //console.log('x' + found[1] + 'x');
+             } else {
+               var fileName = execSync('ls -r migrations/*'+ col_name + '.js | head -1');
+             }
             fs.writeFileSync(fileName.toString().trim(), migContent);
           }
       } else {
@@ -487,7 +502,15 @@ if (argv['migrate']) {
         //console.log(migContent);
 
         execSync('npx sequelize-cli migration:generate --name ' + camel_case(relationName));
-        var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
+        //var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
+        if (isWin) {
+         var fileName = execSync("dir /d /o:-n migrations\\*" + camel_case(relationName) + "*").toString();
+         var re = /(\d+.*?\.js)\b/i;
+         fileName = fileName.match(re);
+         //console.log('x' + found[1] + 'x');
+        } else {
+          var fileName = execSync('ls -r migrations/*'+ camel_case(relationName) + '.js | head -1');
+        }
         fs.writeFileSync(fileName.toString().trim(), migContent);
       }
       execSync('npx sequelize-cli db:migrate');
