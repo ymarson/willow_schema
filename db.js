@@ -20,6 +20,14 @@ const dbSync = process.env.DB_SYNC || 'false';
 
 
 
+if ( dbSync == 'true' ){
+  conn.sync({ force: true }).then(()=> {
+   [1,2,3].forEach(_ => {
+      //Product.create({ name: faker.name.lastName() });
+   })
+  });
+}
+
 
 //start exports
 
