@@ -82,9 +82,9 @@ $ npm run sync-db
 ```
    For windows:
    ```bash
-$ set DB_SYNC=true
-$ node db.js
-$ set DB_SYNC=false
+  set DB_SYNC=true
+  node db.js
+  set DB_SYNC=false
 ```
 
 7. Run Willow to start your backend 
