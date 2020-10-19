@@ -102,11 +102,14 @@ for (var x = 0; x < associations.length; x++) {
 //console.log(exportsBuffer)
 //console.log(associationsBuffer);
 
-db_buffer = db_buffer.replace(/(?<=\/\/start relations\n\n).*(?=\n\/\/end relations)/sg, buffer);
+//db_buffer = db_buffer.replace(/(?<=\/\/start relations\n\n).*(?=\n\/\/end relations)/sg, buffer);
+db_buffer = db_buffer.replace(/(?<=\/\/start relations\r*\n\r*\n).*(?=\r*\n\/\/end relations)/sg, buffer);
 
-db_buffer = db_buffer.replace(/(?<=\/\/start exports\n\n).*(?=\n\/\/end exports)/sg, exportsBuffer);
+//db_buffer = db_buffer.replace(/(?<=\/\/start exports\n\n).*(?=\n\/\/end exports)/sg, exportsBuffer);
+db_buffer = db_buffer.replace(/(?<=\/\/start exports\r*\n\r*\n).*(?=\r*\n\/\/end exports)/sg, exportsBuffer);
 
-db_buffer = db_buffer.replace(/(?<=\/\/start associations\n\n).*(?=\n\/\/end associations)/sg, associationsBuffer);
+//db_buffer = db_buffer.replace(/(?<=\/\/start associations\n\n).*(?=\n\/\/end associations)/sg, associationsBuffer);
+db_buffer = db_buffer.replace(/(?<=\/\/start associations\r*\n\r*\n).*(?=\r*\n\/\/end associations)/sg, associationsBuffer);
 
 //console.log(db_buffer);
 fs.writeFileSync('db.js', db_buffer);
