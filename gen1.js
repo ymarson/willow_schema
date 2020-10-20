@@ -527,7 +527,11 @@ if (argv['migrate']) {
       execSync('npx sequelize-cli db:migrate');
       setTimeout(function(){ 
         console.log('copying base to base_old');
-        execSync('cp base.yaml base_old.yaml'); 
+        if (win32) {
+          execSync('COPY base.yaml base_old.yaml');
+        } else {
+          execSync('cp base.yaml base_old.yaml'); 
+        }
       }, 5000);
       //WRITE DELTED TABLE MIGRATION here
   }
