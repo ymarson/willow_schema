@@ -527,7 +527,7 @@ if (argv['migrate']) {
       execSync('npx sequelize-cli db:migrate');
       setTimeout(function(){ 
         console.log('copying base to base_old');
-        if (win32) {
+        if (isWin) {
           execSync('COPY base.yaml base_old.yaml');
         } else {
           execSync('cp base.yaml base_old.yaml'); 
