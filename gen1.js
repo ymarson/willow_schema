@@ -298,7 +298,7 @@ for (var x = 0; x < relations.length; x++) {
 mBuffer += "\n  }\n});\n\n";
 mBuffer += "\n\nexports.mutation = RootMutation;\n";
 
-mImportsBuffer = "\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList } = graphql;";
+mImportsBuffer = "\nconst { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLFloat } = graphql;";
 
 mImportsBuffer += "\nconst { ";
 
