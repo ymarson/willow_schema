@@ -25,6 +25,7 @@ Relations:
       columns: [id: Int, customer_id: Int, body: String, message_type_id: Int, created_date: Date]
       queries: [all-all, by-pk]
 ```
+*If you are using integers and know that they maybe very lage numbers, its advised to set them as strings instead 
 
 3. Set up Postgres database - this database should exist and you will need to have access to it (skip if already have a working database)
 
